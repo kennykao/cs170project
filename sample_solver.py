@@ -22,10 +22,16 @@ def solve(P, M, N, C, items, constraints):
   if resale < cost: dont buy
   base cost off of resale - cost; always have a positive value
   '''
-  for item in items:
-    if 
-
-
+  d = dict()
+  i = 0
+  while i<N:
+    d[i] = set()
+    i += 1
+  for constraint in constraints:
+    for i in constraint:
+      d[i] = d[i].union(constraint)
+      d[i].remove(i)
+  i = 0
 
 """
 ===============================================================================
