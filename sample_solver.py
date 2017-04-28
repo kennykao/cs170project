@@ -118,6 +118,7 @@ def solve(P, M, N, C, items, constraints):
   # VALUE TO WEIGHT RATION GREEDY ALGORITHM
   # Choose the items with as high a value per weight as possible
   def val_to_weight_greedy(P, M, lst):
+    print('miss')
     lst = lst[:]
     lst_classes = set()
     result = []
@@ -237,12 +238,30 @@ def solve(P, M, N, C, items, constraints):
         lst.remove(curr_min)        
     return (total_resale, result)
 
+  return_val1= 0
+  return_val2= 0
+  return_val3= 0
+  return_val4= 0
 
   # Take max of all algorithms
+  
+  pool = ThreadPool(processes = 4)
+  async_pool = pool.apply_async(min_weight_greedy,(P,M,item_weight_lst))
+  return_val1 = async_pool.get()
+
   pool = ThreadPool(processes = 4)
   async_pool = pool.apply_async(max_val_greedy,(P,M,item_val_lst))
-  return_val = async_pool.get()
-  return max([return_val])[1]
+  return_val2 = async_pool.get()
+
+  pool = ThreadPool(processes = 4)
+  async_pool = pool.apply_async(val_to_weight_greedy,(P,M,item_ratio_lst))
+  return_val3 = async_pool.get()
+
+  pool = ThreadPool(processes = 4)
+  async_pool = pool.apply_async(hybrid_greedy(P,M,item_combined))
+  return_val4 = async_pool.get()
+
+  return max([return_val1,return_val2,return_val3,return_val4])[1]
   '''
   alg_one = Process(target=max_val_greedy(P,M,item_val_lst))
   alg_one.start()
