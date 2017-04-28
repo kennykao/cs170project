@@ -2,7 +2,9 @@
 
 from __future__ import division
 import argparse
-
+from multiprocessing import Process
+from multiprocessing.pool import ThreadPool
+from os import getpid 
 
 """
 ===============================================================================
@@ -50,8 +52,6 @@ def solve(P, M, N, C, items, constraints):
       d[i] = d[i].union(constraint)
       d[i].remove(i)
   i = 0 
-
-  print('cool')
 
 
   # MAX VALUE GREEDY ALGORITHM
@@ -239,13 +239,27 @@ def solve(P, M, N, C, items, constraints):
 
 
   # Take max of all algorithms
-  alg_one = max_val_greedy(P, M, item_val_lst)
-  alg_two = min_weight_greedy(P, M, item_weight_lst)
+  pool = ThreadPool(processes = 4)
+  async_pool = pool.apply_async(max_val_greedy,(P,M,item_val_lst))
+  return_val = async_pool.get()
+  return max([return_val])[1]
+  '''
+  alg_one = Process(target=max_val_greedy(P,M,item_val_lst))
+  alg_one.start()
+  alg_two = Process(target=min_weight_greedy(P,M,item_weight_lst))
+  alg_two.start()
+  alg_one.join()
+  alg_two.join()
+  return max([alg_one,alg_two])[1]
+  '''
+  '''
+  #alg_one = max_val_greedy(P, M, item_val_lst)
+  #alg_two = min_weight_greedy(P, M, item_weight_lst)
   alg_three = val_to_weight_greedy(P,M,item_ratio_lst)
   alg_four = hybrid_greedy(P,M,item_combined)
 
   return max([alg_one, alg_two, alg_three, alg_four])[1]
-
+  '''
 """
 ===============================================================================
   No need to change any code below this line.
