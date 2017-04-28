@@ -9,6 +9,21 @@ import argparse
   Please complete the following function.
 ===============================================================================
 """
+def alg3(P, M, N, C, items, constraints):
+  sorted_by_second = sorted(items, key=lambda tup: tup[5])
+  print(sorted_by_second)
+  i = N - 1
+  sack = [P,M]
+  insack = []
+  while i > 0:
+    if sack[0] == 0: 
+      break
+    elif 
+      insack.append(items[i])
+      i -= 1
+
+
+
 
 def solve(P, M, N, C, items, constraints):
   """
@@ -32,6 +47,20 @@ def solve(P, M, N, C, items, constraints):
       d[i] = d[i].union(constraint)
       d[i].remove(i)
   i = 0
+  while i < N:
+    if items[i][3] > items[i][4]:
+      del items[i]
+      i += 1
+    else:
+      items[i] = items[i] + (items[i][4] - items[i][3],)
+      print(items[i])
+      i += 1
+
+  alg3(P,M,N,C,items,constraints)
+
+
+
+
 
 """
 ===============================================================================
