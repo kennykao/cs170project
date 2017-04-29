@@ -199,19 +199,19 @@ def solve(P, M, N, C, items, constraints):
 
   # Take max of all algorithms
 
-  pool = ThreadPool(processes = 4)
+  pool = ThreadPool(processes = 8)
   async_pool = pool.apply_async(min_weight_greedy,(P,M,item_weight_lst))
   return_val1 = async_pool.get()
 
-  pool = ThreadPool(processes = 4)
+  pool = ThreadPool(processes = 8)
   async_pool = pool.apply_async(max_val_greedy,(P,M,item_val_lst))
   return_val2 = async_pool.get()
 
-  pool = ThreadPool(processes = 4)
+  pool = ThreadPool(processes = 8)
   async_pool = pool.apply_async(val_to_weight_greedy,(P,M,item_ratio_lst))
   return_val3 = async_pool.get()
 
-  pool = ThreadPool(processes = 4)
+  pool = ThreadPool(processes = 8)
   async_pool = pool.apply_async(hybrid_greedy,(P,M,item_combined))
   return_val4 = async_pool.get()
   
